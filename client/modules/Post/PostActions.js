@@ -4,6 +4,8 @@ import callApi from '../../util/apiCaller';
 export const ADD_POST = 'ADD_POST';
 export const ADD_POSTS = 'ADD_POSTS';
 export const DELETE_POST = 'DELETE_POST';
+export const THUMB_UP = 'THUMB_UP';
+export const THUMB_DOWN = 'THUMB_DOWN';
 
 // Export Actions
 export function addPost(post) {
@@ -56,5 +58,31 @@ export function deletePost(cuid) {
 export function deletePostRequest(cuid) {
   return (dispatch) => {
     return callApi(`posts/${cuid}`, 'delete').then(() => dispatch(deletePost(cuid)));
+  };
+}
+
+export function thumbUp(cuid) {
+  return {
+    type: THUMB_UP,
+    cuid
+  };
+}
+
+export function thumbUpRequest(cuid) {
+  return (dispatch) => {
+    return callApi(`posts/${cuid}/up`, 'put').then(() => dispatch(thumbUp(cuid)));
+  };
+}
+
+export function thumbDown(cuid) {
+  return {
+    type: THUMB_DOWN,
+    cuid
+  };
+}
+
+export function thumbDownRequest(cuid) {
+  return (dispatch) => {
+    return callApi(`posts/${cuid}/down`, 'put').then(() => dispatch(thumbDown(cuid)));
   };
 }

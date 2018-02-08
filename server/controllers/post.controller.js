@@ -78,3 +78,23 @@ export function deletePost(req, res) {
     });
   });
 }
+
+export function thumbUp(req, res) {
+  Post.findOneAndUpdate({ cuid: req.params.cuid }, { $inc: { voteCount: 1 } }, err => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+ 
+    return res.status(200).end();
+  });
+}
+
+export function thumbDown(req, res) {
+  Post.findOneAndUpdate({ cuid: req.params.cuid }, { $inc: { voteCount: -1 } }, err => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+
+    return res.status(200).end();
+  });
+}

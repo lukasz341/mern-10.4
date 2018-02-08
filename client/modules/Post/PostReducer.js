@@ -1,4 +1,4 @@
-import { ADD_POST, ADD_POSTS, DELETE_POST } from './PostActions';
+import { ADD_POST, ADD_POSTS, DELETE_POST, THUMB_UP, THUMB_DOWN } from './PostActions';
 
 // Initial State
 const initialState = { data: [] };
@@ -19,7 +19,26 @@ const PostReducer = (state = initialState, action) => {
       return {
         data: state.data.filter(post => post.cuid !== action.cuid),
       };
+    case THUMB_UP:
+      return {
+        data: state.data.map(post => {
+          if (post.cuid === action.cuid) {
+            post.voteCount = post.voteCount + 1;
+          }
 
+          return post;
+        })
+      };
+    case THUMB_DOWN:
+      return {
+        data: state.data.map(post => {
+          if (post.cuid === action.cuid) {
+            post.voteCount = post.voteCount - 1;
+          }
+
+          return post;
+        })
+      };
     default:
       return state;
   }
